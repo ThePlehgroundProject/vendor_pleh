@@ -1,4 +1,4 @@
-PRODUCT_BRAND ?= LineageOS
+PRODUCT_BRAND ?= Plehground
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
@@ -12,8 +12,9 @@ endif
 
 # Default notification/alarm sounds
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.config.notification_sound=Argon.ogg \
-    ro.config.alarm_alert=Hassium.ogg
+    ro.config.ringtone=Ganymede.ogg \
+    ro.config.notification_sound=Ariel.ogg \
+    ro.config.alarm_alert=Argon.ogg
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
 # Disable ADB authentication
@@ -25,33 +26,33 @@ endif
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/lineage/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/lineage/prebuilt/common/bin/50-lineage.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-lineage.sh \
-    vendor/lineage/prebuilt/common/bin/blacklist:$(TARGET_COPY_OUT_SYSTEM)/addon.d/blacklist
+    vendor/pleh/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/pleh/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
+    vendor/pleh/prebuilt/common/bin/50-base.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-base.sh \
+    vendor/pleh/prebuilt/common/bin/blacklist:$(TARGET_COPY_OUT_SYSTEM)/addon.d/blacklist
 
 ifneq ($(AB_OTA_PARTITIONS),)
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/bin/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
-    vendor/lineage/prebuilt/common/bin/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
-    vendor/lineage/prebuilt/common/bin/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
+    vendor/pleh/prebuilt/common/bin/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
+    vendor/pleh/prebuilt/common/bin/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
+    vendor/pleh/prebuilt/common/bin/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
 endif
 
 # Backup Services whitelist
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/backup.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/backup.xml
+    vendor/pleh/config/permissions/backup.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/backup.xml
 
-# Copy all Lineage-specific init rc files
-$(foreach f,$(wildcard vendor/lineage/prebuilt/common/etc/init/*.rc),\
+# Copy all Pleh-specific init rc files
+$(foreach f,$(wildcard vendor/pleh/prebuilt/common/etc/init/*.rc),\
 	$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_SYSTEM)/etc/init/$(notdir $f)))
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/lib/content-types.properties:$(TARGET_COPY_OUT_SYSTEM)/lib/content-types.properties
+    vendor/pleh/prebuilt/common/lib/content-types.properties:$(TARGET_COPY_OUT_SYSTEM)/lib/content-types.properties
 
 # Enable Android Beam on all targets
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/android.software.nfc.beam.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.nfc.beam.xml
+    vendor/pleh/config/permissions/android.software.nfc.beam.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.nfc.beam.xml
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -61,10 +62,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/Vendor_045e_Product_0719.kl
 
-# This is Lineage!
+# This is Pleh!
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/privapp-permissions-lineage-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lineage.xml \
-    vendor/lineage/config/permissions/privapp-permissions-lineage-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-lineage.xml \
+    vendor/pleh/config/permissions/privapp-permissions-pleh-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-pleh.xml \
+    vendor/pleh/config/permissions/privapp-permissions-pleh-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-pleh.xml \
 
 # Enforce privapp-permissions whitelist
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -72,11 +73,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Power whitelist
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/lineage-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/lineage-power-whitelist.xml
+    vendor/pleh/config/permissions/pleh-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/pleh-power-whitelist.xml
 
 # TWRP
 ifeq ($(WITH_TWRP),true)
-include vendor/lineage/config/twrp.mk
+include vendor/pleh/config/twrp.mk
 endif
 
 # Do not include art debug targets
@@ -100,7 +101,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ThemePicker
 
-# Extra tools in Lineage
+# Extra tools in Pleh
 PRODUCT_PACKAGES += \
     7z \
     awk \
@@ -166,8 +167,19 @@ PRODUCT_PACKAGES += \
     su
 endif
 
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay
-DEVICE_PACKAGE_OVERLAYS += vendor/lineage/overlay/common
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/pleh/overlay
+DEVICE_PACKAGE_OVERLAYS += vendor/pleh/overlay/common
+
+PLEH_DATE_YEAR := $(shell date -u +%Y)
+PLEH_DATE_MONTH := $(shell date -u +%m)
+PLEH_DATE_DAY := $(shell date -u +%d)
+PLEH_DATE_HOUR := $(shell date -u +%H)
+PLEH_DATE_MINUTE := $(shell date -u +%M)
+PLEH_BUILD_DATE := $(PLEH_DATE_YEAR)$(PLEH_DATE_MONTH)$(PLEH_DATE_DAY)-$(PLEH_DATE_HOUR)$(PLEH_DATE_MINUTE)
+
+PLEH_PLATFORM_VERSION := 10
+
+PLEH_VERSION := $(PLEH_PLATFORM_VERSION)-$(PLEH_BUILD)-$(PLEH_BUILD_DATE)
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
--include vendor/lineage/config/partner_gms.mk
+-include vendor/pleh/config/partner_gms.mk

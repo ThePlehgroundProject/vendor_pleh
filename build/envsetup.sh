@@ -1,6 +1,6 @@
-function __print_lineage_functions_help() {
+function __print_pleh_functions_help() {
 cat <<EOF
-Additional LineageOS functions:
+Additional Plehground functions:
 - cout:            Changes directory to out.
 - mmp:             Builds all of the modules in the current directory and pushes them to the device.
 - mmap:            Builds all of the modules in the current directory and its dependencies, then pushes the package to the device.

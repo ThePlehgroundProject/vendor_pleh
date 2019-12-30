@@ -4,6 +4,6 @@ ADDITIONAL_BUILD_PROPERTIES += \
     ro.build.fingerprint=$(BUILD_FINGERPRINT)
 endif
 
-# LineageOS System Version
+# Plehground System Version
 ADDITIONAL_BUILD_PROPERTIES += \
-    ro.lineage.version=$(LINEAGE_VERSION)
+    ro.pleh.version=$(PLEH_VERSION)
